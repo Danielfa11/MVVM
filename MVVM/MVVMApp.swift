@@ -9,9 +9,16 @@ import SwiftUI
 
 @main
 struct MVVMApp: App {
+    
+    @StateObject var taskListViewModel:CoreDataViewModel = CoreDataViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            
+                listView()
+            
+            .environmentObject(taskListViewModel)
+            
         }
     }
 }
