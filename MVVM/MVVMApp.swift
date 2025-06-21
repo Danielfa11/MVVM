@@ -14,9 +14,15 @@ struct MVVMApp: App {
     
     var body: some Scene {
         WindowGroup {
-            
-                listView()
-            
+            TabView{
+                Tab("Tasks Tab", systemImage:"list.bullet.clipboard",content: {
+                    listView()
+                })
+                
+                Tab("Test Tab",systemImage: "circle",content: {
+                    Text("Test")
+                })
+            }
             .environmentObject(taskListViewModel)
             
         }

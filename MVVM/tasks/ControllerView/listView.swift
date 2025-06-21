@@ -15,7 +15,7 @@ struct listView: View {
     var body: some View {
         VStack{
             HStack{
-                EditButton()
+                EditButton().disabled(showAddView)
                 Spacer()
                 Text("Tasks").font(.title)
                 Spacer()
@@ -26,16 +26,33 @@ struct listView: View {
                         .font(.title2)
                 })
             }.padding()
+            Text("Number Completed Tasks \(taskListViewModel.numberCompletedTasks)")
             List{
-                Text("Number Completed Tasks \(taskListViewModel.numberCompletedTasks)")
-                
-                ForEach(taskListViewModel.savedEntities,id: \.id){item in
-                    rowView(item:item)
+                Section(header: Text("UnCompleted")){
+                    ForEach(taskListViewModel.savedEntities,id: \.id){item in
+                        
+                        if !item.isComplete{
+                            rowView(item:item)
+                        }
+                        
+                        
+                    }.onDelete(perform: taskListViewModel.deleteTask)
+                        .onMove(perform: taskListViewModel.moveItem)
                 }
-                .onDelete(perform: taskListViewModel.deleteTask)
-                .onMove(perform: taskListViewModel.moveItem)
+                Section(header: Text("Completed")){
+                    ForEach(taskListViewModel.savedEntities,id: \.id){item in
+                        
+                        if item.isComplete{
+                            rowView(item:item)
+                        }
+                        
+                        
+                    }.onDelete(perform: taskListViewModel.deleteTask)
+                        .onMove(perform: taskListViewModel.moveItem)
+                }
                 
-            }.listStyle(.grouped)
+                
+            }.listStyle(.grouped).animation(.default, value: taskListViewModel.savedEntities)
         }.sheet(isPresented: $showAddView) {
             AddView(showAddView:$showAddView)
         }

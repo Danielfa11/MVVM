@@ -27,7 +27,11 @@ class CoreDataViewModel: ObservableObject {
     
     func fetchTasks() {
         numberCompletedTasks = 0
-        let request = NSFetchRequest<TaskEntity>(entityName: "TaskEntity")
+        let request = NSFetchRequest<TaskEntity>(entityName: "TaskEntity");
+        
+        let sort = NSSortDescriptor(key: "isComplete",ascending: true)
+        
+        request.sortDescriptors = [sort]
         do {
           let entities = try contanier.viewContext.fetch(request)
             DispatchQueue.main.async {

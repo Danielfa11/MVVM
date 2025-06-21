@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct AddView: View {
-//    @Environment(\.dismiss) var dismiss
     @EnvironmentObject var taskListViewModel: CoreDataViewModel
     
     @State var title:String = ""
@@ -34,7 +33,7 @@ struct AddView: View {
                         .background(Color.accentColor)
                         .cornerRadius(15)
                 })
-            }.padding(15)            
+            }.padding(15)
         Spacer()
         }.padding()
             .alert("Task Title must be longer than 3 characters", isPresented: $showAlert, actions: {
